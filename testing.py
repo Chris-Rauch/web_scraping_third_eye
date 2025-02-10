@@ -10,7 +10,7 @@ import sys
 
 def main():
     
-    te = ThirdEyeNav('head', 'Chris', 'Matt1907')
+    te = ThirdEyeNav('head', '', '')
     te.login()
     
     info = [True] * 12
