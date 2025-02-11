@@ -251,7 +251,7 @@ class ThirdEyeNav:
 
             callDoneDate.clear()
             memoSubject.clear()
-            #callDoneDate.send_keys(date)
+            callDoneDate.send_keys(date)
             memoSubject.send_keys(memo_subject)
 
             save.click()
