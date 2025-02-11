@@ -310,17 +310,42 @@ class ThirdEyeNav:
                 # travel to the management report page
                 self.navigate_to('Management Reports Page')
                 
-                # locate the dropdown object
+                # locate and select the dropdown object
                 select_elem = self.wait.until(EC.presence_of_element_located((By.NAME,'availableReportList')))
                 dropdown = Select(select_elem)
-
                 dropdown.select_by_visible_text('Collection Report')
 
+                # download the report and wait
+                create_report = self.wait.until(EC.presence_of_element_located((By.XPATH,'//*[@title="Create Reports"]')))
+                create_report.click()
+                time.sleep(10)
+            
+            elif report == 'Late Payment':
+                # travel to the management report page
+                self.navigate_to('Management Reports Page')
+                
+                # locate and select the dropdown object
+                select_elem = self.wait.until(EC.presence_of_element_located((By.NAME,'availableReportList')))
+                dropdown = Select(select_elem)
+                dropdown.select_by_visible_text('Late Payment Calls (Excel)')
+
+                # locate the date fields
+                from_date = self.wait.until(EC.presence_of_element_located((By.NAME,'FromDate')))
+                to_date = self.wait.until(EC.presence_of_element_located((By.NAME,'ToDate')))
+                from_date.clear()
+                to_date.clear()
+                from_date.send_keys(l_date)
+                to_date.send_keys(r_date)
+
+                # download the report and wait
                 create_report = self.wait.until(EC.presence_of_element_located((By.XPATH,'//*[@title="Create Reports"]')))
                 create_report.click()
                 time.sleep(10)
             else:
                 raise Exception("Invalid arguments in function download_report")
+        except TimeoutException:
+            print(e)
+            return ''
         except Exception as e:
             print(e)
             return ''
