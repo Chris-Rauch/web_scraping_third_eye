@@ -58,7 +58,7 @@ class ThirdEyeNav:
     '''
     def __init__(self, headless, username, password):
         # set data members
-        self.open_driver()
+        self.open_driver(headless)
         self.download_dir = DOWNLOAD_DIR
         self.username = username
         self.password = password
@@ -81,8 +81,8 @@ class ThirdEyeNav:
         self.is_logged_in = False
         self.current_page = None
     
-    def open_driver(self):
-        self.driver = driver_factory('head')
+    def open_driver(self,headless):
+        self.driver = driver_factory(headless)
         self.wait = WebDriverWait(self.driver, error_wait_time)
 
     def login(self):
@@ -321,6 +321,9 @@ class ThirdEyeNav:
                 time.sleep(10)
             
             elif report == 'Late Payment':
+                if not l_date or not r_date:
+                    raise ValueError('Dates are required for Late Payment report')
+                
                 # travel to the management report page
                 self.navigate_to('Management Reports Page')
                 
